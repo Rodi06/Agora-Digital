@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title id="post-title">Publicación — Filosofía con Raúl</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="site-title">Filosofía con Raúl</h1>
+      <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú">☰</button>
+      <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+        <a href="index.html">Blog</a><a href="about.html">Sobre mí</a><a href="library.html">Biblioteca</a><a href="contact.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container post-page">
+    <article id="post-content" class="post"></article>
+  </main>
+
+  <footer class="site-footer"><div class="container"><p>© <span id="year2"></span> Filosofía con Raúl</p></div></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    document.getElementById('year2').textContent = new Date().getFullYear();
+    function getQueryParam(name) { const params = new URLSearchParams(location.search); return params.get(name); }
+    const postPath = getQueryParam('post');
+    if (!postPath) { document.getElementById('post-content').innerHTML = '<p>No se especificó publicación.</p>'; }
+    else {
+      fetch(postPath).then(r=>r.text()).then(md=>{
+        document.getElementById('post-content').innerHTML = marked.parse(md);
+        const title = md.split('\n')[0].replace(/^#\s+/,'') || 'Publicación';
+        document.getElementById('post-title').textContent = title + ' — Filosofía con Raúl';
+      }).catch(err=>{ document.getElementById('post-content').innerHTML = '<p>Error cargando la publicación.</p>'; });
+    }
+  </script>
+  <script src="js/header.js"></script>
+</body>
+</html>
