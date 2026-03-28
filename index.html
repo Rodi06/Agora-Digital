@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ágora Digital</title>
+  <meta name="description" content="Blog filosófico personal con ensayos, notas y reflexiones." />
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --paper: #fffdf8;
+      --ink: #1d1a16;
+      --muted: #6f6558;
+      --line: #d8cfc2;
+      --accent: #6b4f2a;
+      --accent-2: #3f3120;
+      --shadow: 0 14px 40px rgba(31, 24, 17, 0.08);
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #f8f4ec 0%, #f3ede1 100%);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(92%, var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(248, 244, 236, 0.82);
+      border-bottom: 1px solid rgba(107, 79, 42, 0.14);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 30% 30%, #8b6a3f, var(--accent-2));
+      color: #fff9ef;
+      box-shadow: var(--shadow);
+      font-size: 1.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.98rem;
+      transition: color .2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent-2);
+    }
+
+    .hero {
+      padding: 5.5rem 0 3.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.82rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      line-height: 0.95;
+      margin: 0 0 1rem;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 62ch;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.9rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff8ef;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--accent-2);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .hero-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(107,79,42,0.08), transparent 50%);
+      pointer-events: none;
+    }
+
+    .quote {
+      font-size: 1.1rem;
+      margin: 0 0 1rem;
+      color: var(--accent-2);
+    }
+
+    .quote small {
+      display: block;
+      margin-top: 0.8rem;
+      color: var(--muted);
+    }
+
+    section {
+      padding: 2.5rem 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: end;
+      margin-bottom: 1.4rem;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2vw, 2.4rem);
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      width: fit-content;
+      padding: 0.34rem 0.72rem;
+      border-radius: 999px;
+      background: #efe5d6;
+      color: var(--accent-2);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.3rem;
+      line-height: 1.2;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      border-top: 1px dashed var(--line);
+      padding-top: 0.8rem;
+    }
+
+    .about {
+      grid-template-columns: 0.95fr 1.05fr;
+      align-items: start;
+    }
+
+    .paper {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .paper p:last-child { margin-bottom: 0; }
+
+    .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .topics span {
+      padding: 0.55rem 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fffaf1;
+      color: var(--accent-2);
+      font-size: 0.92rem;
+    }
+
+    .contact-box {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 0.7rem 0.9rem;
+      border-radius: 12px;
+      font: inherit;
+      color: var(--accent-2);
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .about,
+      .posts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .menu-toggle { display: inline-block; }
+      .nav {
+        align-items: start;
+        flex-direction: column;
+      }
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 0.5rem;
+      }
+      .nav-links.open { display: flex; }
+      .hero { padding-top: 4rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .section-head { flex-direction: column; align-items: start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#inicio" class="brand">
+        <span class="brand-mark">A</span>
+        <span>Ágora Digital</span>
+      </a>
+
+      <button class="menu-toggle" id="menuBtn" aria-label="Abrir menú">Menú</button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#inicio" class="active">Inicio</a>
+        <a href="#ensayos">Ensayos</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#temas">Temas</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Blog filosófico personal</div>
+          <h1>Ideas, ensayos y preguntas que no se dejan callar.</h1>
+          <p>
+            Este es un espacio para reunir ensayos, reflexiones y notas de lectura sobre metafísica,
+            ética, lógica y filosofía griega. Un archivo vivo de pensamiento, duda y búsqueda.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#ensayos">Leer ensayos</a>
+            <a class="btn secondary" href="#sobre-mi">Conocer el proyecto</a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <p class="quote">
+            “La filosofía comienza cuando una pregunta deja de ser comodidad y se convierte en necesidad.”
+            <small>— Nota del autor</small>
+          </p>
+          <div class="paper">
+            <strong>Próxima publicación</strong>
+            <p>
+              Un ensayo sobre la tensión entre deseo, control y libertad en la tradición clásica.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="ensayos">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Ensayos recientes</h2>
+            <p>Estos bloques pueden convertirse luego en páginas separadas para cada ensayo.</p>
+          </div>
+        </div>
+
+        <div class="grid posts-grid">
+          <article class="card">
+            <span class="tag">Metafísica</span>
+            <h3>La trascendencia de la Idea en Platón</h3>
+            <p>
+              Un recorrido por el sentido ontológico de la Idea y su diferencia frente a lo sensible.
+            </p>
+            <div class="meta">
+              <span>15 marzo 2026</span>
+              <a href="#">Leer más →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <span class="tag">Ética</span>
+            <h3>Deseo y dominio de sí en el pensamiento antiguo</h3>
+            <p>
+              Reflexión sobre la relación entre libertad interior, prudencia y conducción de la vida.
+            </p>
+            <div class="meta">
+              <span>12 marzo 2026</span>
+              <a href="#">Leer más →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <span class="tag">Lógica</span>
+            <h3>Qué significa argumentar bien</h3>
+            <p>
+              Una nota breve sobre premisas, conclusión y la forma correcta de sostener una tesis.
+            </p>
+            <div class="meta">
+              <span>08 marzo 2026</span>
+              <a href="#">Leer más →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre-mi">
+      <div class="container grid about">
+        <div class="paper">
+          <div class="eyebrow">Sobre mí</div>
+          <h2>Un cuaderno público de pensamiento</h2>
+          <p>
+            Ágora Digital nace como un lugar para publicar ensayos filosóficos, comentarios críticos,
+            apuntes de lectura y reflexiones personales. No busca cerrar preguntas, sino pensarlas con más rigor.
+          </p>
+          <p>
+            Aquí la escritura funciona como ejercicio de claridad: leer, interpretar, argumentar y volver a preguntar.
+          </p>
+        </div>
+
+        <div class="paper" id="temas">
+          <div class="eyebrow">Temas</div>
+          <h2>Líneas de trabajo</h2>
+          <p>
+            Puedes adaptar esta sección a tus cursos, autores o intereses principales.
+          </p>
+          <div class="topics">
+            <span>Metafísica</span>
+            <span>Ética</span>
+            <span>Lógica</span>
+            <span>Filosofía griega</span>
+            <span>Notas de lectura</span>
+            <span>Ensayos críticos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="container">
+        <div class="paper contact-box">
+          <div class="eyebrow">Contacto</div>
+          <h2>Sigamos la conversación</h2>
+          <p>
+            Aquí luego puedes poner tu correo, redes o un enlace a GitHub.
+          </p>
+          <a class="btn" href="mailto:tucorreo@ejemplo.com">Escribirme</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 Ágora Digital · Blog filosófico personal
+    </div>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('menuBtn');
+    const nav = document.getElementById('navLinks');
+
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => nav.classList.remove('open'));
+    });
+  </script>
+</body>
+</html>
